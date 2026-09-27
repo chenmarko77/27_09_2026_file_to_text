@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="uk">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Перегляд текстового файлу</title>
+	<style>
+		:root {
+			color-scheme: light;
+			font-family: "Trebuchet MS", sans-serif;
+			color: #202b2c;
+			background: #f3f5f2;
+		}
+
+		body {
+			margin: 0;
+			min-height: 100vh;
+			background: linear-gradient(140deg, #e1eee8 0, #f3f5f2 45%, #edf0f5 100%);
+		}
+
+		main {
+			width: min(720px, calc(100% - 32px));
+			margin: 0 auto;
+			padding: clamp(36px, 8vh, 80px) 0;
+		}
+
+		h1 {
+			margin: 0 0 28px;
+			font: 700 clamp(28px, 5vw, 40px)/1.15 Georgia, serif;
+		}
+
+		form {
+			display: flex;
+			flex-wrap: wrap;
+			align-items: end;
+			gap: 16px;
+		}
+
+		label {
+			display: grid;
+			flex: 1 1 280px;
+			gap: 8px;
+			font-weight: 700;
+		}
+
+		input[type="file"] {
+			box-sizing: border-box;
+			width: 100%;
+			padding: 12px;
+			border: 1px solid #aab8b4;
+			border-radius: 4px;
+			background: #fff;
+			font: inherit;
+		}
+
+		button {
+			min-height: 48px;
+			padding: 0 20px;
+			border: 0;
+			border-radius: 4px;
+			background: #176b60;
+			color: #fff;
+			font: 700 16px "Trebuchet MS", sans-serif;
+			cursor: pointer;
+		}
+
+		button:hover, button:focus-visible {
+			background: #105349;
+		}
+
+		.error { color: #a02d2d; }
+
+		section { margin-top: 36px; }
+
+		h2 {
+			margin: 0 0 12px;
+			font: 700 22px Georgia, serif;
+		}
+
+		pre {
+			min-height: 80px;
+			margin: 0;
+			padding: 20px;
+			border: 1px solid #d4ddda;
+			border-radius: 4px;
+			background: #fff;
+			font: 15px/1.6 Consolas, monospace;
+			white-space: pre-wrap;
+			overflow-wrap: anywhere;
+		}
+	</style>
+</head>
+<body>
+	<main>
+		<h1>Перегляд текстового файлу</h1>
+		<form method="post" enctype="multipart/form-data">
+			<label for="file">Оберіть файл (.txt)
+				<input id="file" name="file" type="file" accept=".txt,text/plain" required>
+			</label>
+			<button type="submit">Показати вміст</button>
+		</form>
+
+		{% if error %}<p class="error" role="alert">{{ error }}</p>{% endif %}
+		{% if content is not none %}
+		<section aria-label="Вміст файлу">
+			<h2>Вміст файлу</h2>
+			<pre>{% if content %}{{ content }}{% else %}Файл порожній.{% endif %}</pre>
+		</section>
+		{% endif %}
+	</main>
+</body>
+</html>
